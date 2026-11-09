@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6f8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <title>工作台</title>
+  <link rel="icon" href="./mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><img src="./mark.svg" alt="" width="26" height="26"><h1>工作台</h1></div>
+    <div class="controls">
+      <button id="lock" hidden>收起</button>
+    </div>
+  </header>
+  <main class="shell">
+    <section id="gate" class="gate" aria-label="工作台已收起" hidden>
+      <button id="unlock">继续</button>
+    </section>
+    <section id="workspace" hidden>
+      <div class="toolbar">
+        <div class="controls">
+          <select id="lists" aria-label="选择清单" hidden></select>
+          <button id="add" aria-label="添加清单" title="添加清单">＋</button>
+        </div>
+        <nav aria-label="切换条目" class="controls">
+          <button id="previous" disabled>← 上一项</button>
+          <span id="count" class="muted" aria-live="polite"></span>
+          <button id="next" disabled>下一项 →</button>
+        </nav>
+      </div>
+      <div id="empty" class="empty"><button id="empty-add">添加清单</button></div>
+      <div id="entry" class="panes" hidden>
+        <section class="panel" aria-labelledby="title">
+          <header class="panel-top"><span>条目 <span id="number" class="muted"></span></span><a id="source-link" target="_blank" rel="noopener noreferrer" aria-label="打开来源" title="打开来源">↗</a></header>
+          <div class="content">
+            <h2 id="title"></h2>
+            <label class="visually-hidden" for="statement">条目内容</label>
+            <textarea id="statement" rows="12" maxlength="30000" placeholder="粘贴或记录条目内容" spellcheck="false"></textarea>
+          </div>
+        </section>
+        <section class="panel" aria-label="草稿">
+          <header class="panel-top"><label for="draft">草稿</label><button id="run">运行</button></header>
+          <div class="content editor">
+            <textarea id="draft" rows="13" maxlength="75000" placeholder="Python" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+            <pre id="output" role="status" hidden></pre>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <dialog id="dialog" aria-labelledby="dialog-title">
+    <form id="import-form">
+      <header class="toolbar"><h2 id="dialog-title">添加清单</h2><button type="button" id="close" aria-label="关闭">×</button></header>
+      <label for="name">清单名称</label>
+      <input id="name" maxlength="80" placeholder="我的清单">
+      <label for="source">链接或导出内容</label>
+      <textarea id="source" rows="6" maxlength="750000" required placeholder="每行一个条目链接，或粘贴导出内容"></textarea>
+      <details><summary>从来源页面导入</summary><p>把 <a id="exporter" href="#">复制条目</a> 拖到书签栏。在已登录的来源清单页点击书签复制链接和标题。在单个题目页选中题面再点书签，可复制题面，回工作台粘贴到对应条目。</p></details>
+      <p id="error" role="alert" hidden></p>
+      <button type="submit" class="primary">添加</button>
+    </form>
+  </dialog>
+</body>
+</html>
